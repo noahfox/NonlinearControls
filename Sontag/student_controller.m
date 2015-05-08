@@ -9,22 +9,13 @@
 function u = student_controller(t, x, consts, ctrl)
 global done
 
-% LfV = eval(subs(ctrl.LfV,sym_vec,x));
-% LgV = eval(subs(ctrl.LgV,sym_vec,x));
-
 if done == 0
     x(2) = x(2) - 200;
 end
 
 LfV = ctrl.LfVfun(x(1),x(2),x(3),x(4),x(5),x(6),x(7),x(8),x(9));
 LgV = ctrl.LgVfun(x(1),x(2),x(3),x(4),x(5),x(6),x(7),x(8),x(9));
-% a = LfV;
-% b = LgV*LgV';
-% if LgV ~= 0
-%     u = -((a + sqrt(a^2 + b^4))/b)*LgV';
-% else
-%     u = [0;0];
-% end
+
 
 if all(LgV ~= 0)
     u(1,1) = -((LfV + sqrt(LfV^2 + LgV(1)^4))/LgV(1));
