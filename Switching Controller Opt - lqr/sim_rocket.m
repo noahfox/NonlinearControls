@@ -1,18 +1,18 @@
-function sim_rocket(x0)
+function [J x] = sim_rocket(qr,x0)
     close all ;
 
     % load constant parameters
     consts = get_consts() ;
     
     if(nargin < 1)
-        x0 = [100; 500; pi/4; 0;
+        x0 = [100; 100; pi/2; 0;
           0; 0; 0; 0;
-          consts.m_nofuel+consts.max.m_fuel] ;
+          consts.m_nofuel+0.7*consts.max.m_fuel] ;
     end
     
 
     % call student one-time setup
-    ctrl = student_setup(x0, consts) ;
+    ctrl = student_setup(x0, consts, qr) ;
 
       
     % Integrate system
@@ -21,26 +21,26 @@ function sim_rocket(x0)
 
     
     % Display Helpful information after simulation
-    disp(['Touchdown Time: ' num2str(t(end))]) ;
-    disp(['Touchdown Configuration: y=' num2str(x(end,1)) ' z=' num2str(x(end,2)) ' theta(deg)=' num2str(x(end,3)*180/pi) ' psi(deg)=' num2str(x(end,4)*180/pi)]) ;
-    disp(['Touchdown Velocity: y=' num2str(x(end,5)) ' z=' num2str(x(end,6)) ' theta(deg/s)=' num2str(x(end,7)*180/pi) ' psi(deg/s)=' num2str(x(end,8)*180/pi)]) ;
+%     disp(['Touchdown Time: ' num2str(t(end))]) ;
+%     disp(['Touchdown Configuration: y=' num2str(x(end,1)) ' z=' num2str(x(end,2)) ' theta(deg)=' num2str(x(end,3)*180/pi) ' psi(deg)=' num2str(x(end,4)*180/pi)]) ;
+%     disp(['Touchdown Velocity: y=' num2str(x(end,5)) ' z=' num2str(x(end,6)) ' theta(deg/s)=' num2str(x(end,7)*180/pi) ' psi(deg/s)=' num2str(x(end,8)*180/pi)]) ;
     
     J = compute_score(x(end,:)', consts) ;
-    disp(['Score: ' num2str(J)]) ;
+%     disp(['Score: ' num2str(J)]) ;
     
-    % Plots
-    figure ; plot(t, x(:,1)) ; grid on ; xlabel('Time (s)') ; ylabel('y (m)') ;
-    figure ; plot(t, x(:,2)) ; grid on ; xlabel('Time (s)') ; ylabel('z (m)') ;
-    figure ; plot(t, x(:,3)*180/pi) ; grid on ; xlabel('Time (s)') ; ylabel('theta (deg)') ;
-    figure ; plot(t, x(:,4)*180/pi) ; grid on ; xlabel('Time (s)') ; ylabel('psi (deg)') ;
+%     % Plots
+%     figure ; plot(t, x(:,1)) ; grid on ; xlabel('Time (s)') ; ylabel('y (m)') ;
+%     figure ; plot(t, x(:,2)) ; grid on ; xlabel('Time (s)') ; ylabel('z (m)') ;
+%     figure ; plot(t, x(:,3)*180/pi) ; grid on ; xlabel('Time (s)') ; ylabel('theta (deg)') ;
+%     figure ; plot(t, x(:,4)*180/pi) ; grid on ; xlabel('Time (s)') ; ylabel('psi (deg)') ;
     
-    % Animation
-    u = zeros(length(t), 2) ;
-    for j=1:length(t)
-        [dx uu] = odefun_rocket(t, x(j,:)', consts, ctrl) ;
-        u(j,:) = uu' ;
-    end
-    animate_rocket(t, x, u) ;
+%     % Animation
+%     u = zeros(length(t), 2) ;
+%     for j=1:length(t)
+%         [dx uu] = odefun_rocket(t, x(j,:)', consts, ctrl) ;
+%         u(j,:) = uu' ;
+%     end
+%     animate_rocket(t, x, u) ;
 end
 
 
