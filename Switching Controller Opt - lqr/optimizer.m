@@ -16,6 +16,7 @@ initials = [10 150 0 0 0 0 0 0 fuel;
     100 1500 pi 0 0 0 0 0 fuel;
     100 1500 pi/2 0 0 0 0 0 fuel;
     100 700 pi/2 0 0 0 0 0 fuel];
+% initials = [100 1500 pi/2 0 0 0 0 0 fuel];
 
 
 opts.MaxFunEvals  = 50000;
@@ -27,8 +28,8 @@ opts.LogPlot = 'off';
 opts.StopOnStagnation = 'on';
 opts = cmaes('defaults', opts);
 
-sigma = 0.1;
+sigma = .1;
 
-x0 = [1 1 1 1 1 1 1 1 1 1 1];
+x0 = [1 1 1 1 10 10 10 10 1 .01 .1];
 
 [XMIN,FMIN,COUNTEVAL,STOPFLAG,OUT,BESTEVER] = cmaes('costfun',x0,sigma,opts);
