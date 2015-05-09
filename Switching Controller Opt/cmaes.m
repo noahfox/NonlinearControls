@@ -2346,23 +2346,26 @@ manual_mode = 0;
 function score = costfun(x)
 global best_yet initials
 % run score function here
-qr1 = x(1:11);
-qr2 = x(12:22);
+% K = reshape(x,2,9);
+K = x';
 J = 0;
 numnz = 0;
-for i = 1:1:length(initials(:,1))
-    [tempJ state] = sim_rocket(qr1,qr2,initials(i,:));
+pass = [0];
+for i = 1:1:length(initials(1,:))
+    [tempJ state] = sim_rocket(K,initials(i,:));
     J = J + tempJ;
     if tempJ ~= 0
         numnz = numnz+1;
+        pass(end+1) = i;
     end
 end
 J = J/length(initials(:,1));
 score = (1/J)^2;
 if J > best_yet
     best_yet = J;
-    fprintf('Score: %g     Successful: %i/%i\n',J,numnz,length(initials));
-    save('best.mat','qr1','qr2','x')
+    fprintf('Score: %g     Successful: %i/%i\n',J,numnz,length(initials(1,:)));
+    disp(pass);
+    save('best.mat','K')
 end
 
 function f=fjens1(x)

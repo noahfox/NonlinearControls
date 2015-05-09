@@ -5,7 +5,7 @@ function sim_rocket(x0)
     consts = get_consts() ;
     
     if(nargin < 1)
-        x0 = [100; 500; pi/4; 0;
+        x0 = [100; 1500; pi; 0;
           0; 0; 0; 0;
           consts.m_nofuel+consts.max.m_fuel] ;
     end

@@ -1,4 +1,4 @@
-function [J x] = sim_rocket(qr1,qr2,x0)
+function [J x] = sim_rocket(K,x0)
     close all ;
 
     % load constant parameters
@@ -12,7 +12,7 @@ function [J x] = sim_rocket(qr1,qr2,x0)
     
 
     % call student one-time setup
-    ctrl = student_setup(x0, consts, qr1, qr2) ;
+    ctrl = student_setup(x0, consts, K) ;
 
       
     % Integrate system
