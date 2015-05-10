@@ -2346,12 +2346,12 @@ manual_mode = 0;
 function score = costfun(x)
 global best_yet initials
 % run score function here
-% K = reshape(x,2,9);
-K = x';
+K = [x(1:9)';x(10:18)'];
+% K = x';
 J = 0;
 numnz = 0;
 pass = [0];
-for i = 1:1:length(initials(1,:))
+for i = 1:1:length(initials(:,2))
     [tempJ state] = sim_rocket(K,initials(i,:));
     J = J + tempJ;
     if tempJ ~= 0
@@ -2363,7 +2363,7 @@ J = J/length(initials(:,1));
 score = (1/J)^2;
 if J > best_yet
     best_yet = J;
-    fprintf('Score: %g     Successful: %i/%i\n',J,numnz,length(initials(1,:)));
+    fprintf('Score: %g     Successful: %i/%i\n',J,numnz,length(initials(:,1)));
     disp(pass);
     save('best.mat','K')
 end
