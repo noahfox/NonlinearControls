@@ -2347,23 +2347,26 @@ function score = costfun(x)
 global best_yet initials
 % run score function here
 K = [x(1:9)';x(10:18)'];
+qr = x(19:29);
+switchs = x(30:33);
 % K = x';
 J = 0;
 numnz = 0;
 pass = [0];
 for i = 1:1:length(initials(:,2))
-    [tempJ state] = sim_rocket(K,initials(i,:));
+    [tempJ state] = sim_rocket(K,qr,switchs,initials(i,:));
     J = J + tempJ;
     if tempJ ~= 0
         numnz = numnz+1;
         pass(end+1) = i;
     end
 end
+realscore = J;
 J = J/length(initials(:,1));
 score = (1/J)^2;
 if J > best_yet
     best_yet = J;
-    fprintf('Score: %g     Successful: %i/%i\n',J,numnz,length(initials(:,1)));
+    fprintf('Score: %g     Successful: %i/%i Project Score: %g\n',J,numnz,length(initials(:,1)),realscore);
     disp(pass);
     save('best.mat','K')
 end

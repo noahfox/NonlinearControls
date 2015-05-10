@@ -45,7 +45,8 @@ else
     u = [0;0];
 end
 % && abs(x(5)) < 5
- if abs(x(3)) < 0.05 && abs(x(7)) < .1 && abs(x(2)) < 100 || done == 1
+%  if abs(x(3)) < 0.05 && abs(x(7)) < .1 && abs(x(2)) < 100 || done == 1
+if abs(x(3)) < ctrl.x3 && abs(x(7)) < ctrl.x7 && abs(x(2)) < ctrl.x2 && abs(x(1)) < ctrl.x1 || done == 1
 %if abs(x(3)) < 0.05 && abs(x(7)) < .1 && abs(x(2)) < 40 || done == 1
     u = -ctrl.K*x;
     done = 1;
